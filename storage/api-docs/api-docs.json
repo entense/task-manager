@@ -1,0 +1,784 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Task Manager",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "https://task-manager.gghb.net/api",
+            "description": "Local Test Host"
+        },
+        {
+            "url": "https://task-manager.gghb.net/api",
+            "description": "Production Host"
+        }
+    ],
+    "paths": {
+        "/v1/tasks/{taskId}/answers": {
+            "post": {
+                "tags": [
+                    "Ответы"
+                ],
+                "summary": "Добавить ответ к задаче",
+                "operationId": "51e3244631861cf600d3efbb66a8ab19",
+                "parameters": [
+                    {
+                        "parameter": "taskId",
+                        "name": "taskId",
+                        "in": "path",
+                        "description": "ID задачи",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 2
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TaskAnswerStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Метод возвращает созданную ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/TaskAnswerResource"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/UnuthorizedResponse"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/v1/answers/{answerId}": {
+            "delete": {
+                "tags": [
+                    "Ответы"
+                ],
+                "summary": "Удалить ответ",
+                "operationId": "6b62d057d8e7bcf85e8fdae4804a6399",
+                "parameters": [
+                    {
+                        "parameter": "answerId",
+                        "name": "answerId",
+                        "in": "path",
+                        "description": "ID ответа",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 2
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Ответ удален",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "Ответ не найден",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundContent"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/v1/tasks": {
+            "get": {
+                "tags": [
+                    "Задачи"
+                ],
+                "summary": "Получить список задач",
+                "operationId": "aedb50669e035e8c0eef1b588ca94f12",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/PaginateRequest.page"
+                    },
+                    {
+                        "$ref": "#/components/parameters/PaginateRequest.per_page"
+                    },
+                    {
+                        "$ref": "#/components/parameters/TaskListRequest.filter.status"
+                    },
+                    {
+                        "$ref": "#/components/parameters/TaskListRequest.filter.tagged"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Метод возвращает список задач с пагинацией",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/TaskResource"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/PaginateResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/UnuthorizedResponse"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Задачи"
+                ],
+                "summary": "Создать задачу",
+                "description": "Требуются права администратора",
+                "operationId": "d706b2fd8db94f7799ed39223aed9dee",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TaskStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Метод возвращает созданную задачу",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/TaskResource"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/UnuthorizedResponse"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/v1/tasks/{taskId}": {
+            "delete": {
+                "tags": [
+                    "Задачи"
+                ],
+                "summary": "Удалить задачу",
+                "description": "Требуются права администратора",
+                "operationId": "99564ce3a9c784fcadc0ee388356bd83",
+                "parameters": [
+                    {
+                        "parameter": "taskId",
+                        "name": "taskId",
+                        "in": "path",
+                        "description": "ID задачи",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 2
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Задача удалена",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "Задача не найдена",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundContent"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Задачи"
+                ],
+                "summary": "Редактировать задачу",
+                "description": "Требуются права администратора",
+                "operationId": "b5a4b599472d4c3a4a67195754babeb3",
+                "parameters": [
+                    {
+                        "parameter": "taskId",
+                        "name": "taskId",
+                        "in": "path",
+                        "description": "ID задачи",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 2
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TaskUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Метод возвращает обновленную задачу",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/TaskResource"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Задача не найдена",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundContent"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/UnuthorizedResponse"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ApiResponse": {
+                "description": ""
+            },
+            "PaginateResponse": {
+                "description": "",
+                "properties": {
+                    "links": {
+                        "properties": {
+                            "first": {
+                                "description": "Первая страница пагинации",
+                                "type": "string"
+                            },
+                            "last": {
+                                "description": "Последняя страница пагинации",
+                                "type": "string"
+                            },
+                            "prev": {
+                                "description": "Предыдущая страница пагинации",
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "next": {
+                                "description": "Следующая страница пагинации",
+                                "type": "string",
+                                "nullable": true
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "meta": {
+                        "properties": {
+                            "current_page": {
+                                "description": "Текущая страница",
+                                "type": "integer"
+                            },
+                            "from": {
+                                "type": "integer"
+                            },
+                            "last_page": {
+                                "description": "Последняя страница пагинации",
+                                "type": "integer"
+                            },
+                            "links": {
+                                "type": "array",
+                                "items": {
+                                    "description": "Страница пагинации",
+                                    "properties": {
+                                        "url": {
+                                            "type": "string"
+                                        },
+                                        "label": {
+                                            "type": "string"
+                                        },
+                                        "active": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "path": {
+                                "type": "string"
+                            },
+                            "per_page": {
+                                "type": "integer"
+                            },
+                            "to": {
+                                "type": "integer"
+                            },
+                            "total": {
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "ExceptionResponse": {
+                "description": "",
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                        "properties": {
+                            "message": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ]
+            },
+            "NotFoundContent": {
+                "description": "Ресурс не найден.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ExceptionResponse"
+                    }
+                ]
+            },
+            "FailedDependencyContent": {
+                "description": "Неудачная зависимость.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ExceptionResponse"
+                    }
+                ]
+            },
+            "ToManyRequestContent": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ExceptionResponse"
+                    }
+                ]
+            },
+            "TaskAnswerStoreRequest": {
+                "properties": {
+                    "text": {
+                        "description": "Текст ответа",
+                        "type": "string"
+                    },
+                    "files": {
+                        "description": "Файлы",
+                        "type": "array",
+                        "items": {
+                            "description": "Файл",
+                            "type": "file"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "TaskStoreRequest": {
+                "properties": {
+                    "title": {
+                        "description": "Заголовок",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Описание",
+                        "type": "string"
+                    },
+                    "need_answer": {
+                        "type": "boolean"
+                    },
+                    "links": {
+                        "description": "Ссылки",
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "title": {
+                                    "type": "string"
+                                },
+                                "link": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "files": {
+                        "description": "Файлы",
+                        "type": "array",
+                        "items": {
+                            "description": "Файл",
+                            "type": "file"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "TaskUpdateRequest": {
+                "properties": {
+                    "status": {
+                        "type": "enum",
+                        "enum": [
+                            0,
+                            1
+                        ]
+                    },
+                    "tagged": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "FileResource": {
+                "properties": {
+                    "link": {},
+                    "meta": {
+                        "properties": {
+                            "name": {},
+                            "type": {},
+                            "mime_type": {},
+                            "width": {
+                                "type": "integer",
+                                "nullable": true
+                            },
+                            "height": {
+                                "type": "integer",
+                                "nullable": true
+                            },
+                            "duration": {
+                                "type": "integer",
+                                "nullable": true
+                            },
+                            "dominant_color": {
+                                "nullable": true
+                            },
+                            "format": {},
+                            "cover": {}
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "LinkResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "link": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "TaskAnswerResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "text": {
+                        "type": "string"
+                    },
+                    "files": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FileResource"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "TaskResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "status": {
+                        "type": "boolean"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "tagged": {
+                        "type": "boolean"
+                    },
+                    "need_answer": {
+                        "type": "boolean"
+                    },
+                    "links": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/LinkResource"
+                        }
+                    },
+                    "files": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FileResource"
+                        }
+                    },
+                    "answers": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TaskAnswerResource"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "responses": {
+            "UnuthorizedResponse": {
+                "description": "Неавторизован",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/schemas/ExceptionResponse"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "ForbiddenResponse": {
+                "description": "Нет прав на это действие.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/schemas/ExceptionResponse"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "UnprocessedResponse": {
+                "description": "Ошибка валидации",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": false
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Validation errors"
+                                },
+                                "data": {
+                                    "properties": {
+                                        "key": {
+                                            "description": "Ключ параметра",
+                                            "type": "array",
+                                            "items": {
+                                                "description": "Текст ошибки",
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "parameters": {
+            "PaginateRequest.page": {
+                "name": "page",
+                "in": "query",
+                "description": "Страница пагинации",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                },
+                "example": 1
+            },
+            "PaginateRequest.per_page": {
+                "name": "per_page",
+                "in": "query",
+                "description": "Количество элементов на странице",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                },
+                "example": 15
+            },
+            "TaskListRequest.filter.status": {
+                "name": "filter[status]",
+                "in": "query",
+                "description": "Фильтр по статусу.",
+                "required": false,
+                "schema": {
+                    "enum": [
+                        0,
+                        1
+                    ]
+                }
+            },
+            "TaskListRequest.filter.tagged": {
+                "name": "filter[tagged]",
+                "in": "query",
+                "description": "Фильтр по отмеченным.",
+                "required": false,
+                "schema": {
+                    "enum": [
+                        true,
+                        false
+                    ]
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearer": {
+                "type": "http",
+                "description": "Enter token in format (Bearer <token>)",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
