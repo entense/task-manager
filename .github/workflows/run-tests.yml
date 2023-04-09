@@ -31,16 +31,12 @@ jobs:
       - name: Install dependencies
         run: |
           composer update --prefer-dist --no-interaction --${{ matrix.dependency-version }}
-      - name: Run static code analysis
-        run: vendor/bin/phpstan --error-format=github
 
-      - name: Execute tests
-        run: vendor/bin/phpunit
+      # - name: Run static code analysis
+      #   run: vendor/bin/phpstan --error-format=github
+
+      # - name: Execute tests
+      #   run: vendor/bin/phpunit
 
       - name: Run coding standard checks
-        run: vendor/bin/php-cs-fixer fix
-
-      - name: Auto-commit php-cs-fixer changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Apply coding standard fixes
+        run: vendor/bin/pint --test

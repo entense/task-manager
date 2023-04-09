@@ -18,10 +18,10 @@ use Symfony\Component\HttpFoundation\Response;
 final class TaskController extends Controller
 {
     public function __construct(
-        private StoreTaskHandler $storeAction,
-        private PaginateTaskHandler $paginateAction,
-        private UpdateTaskHandler $updateAction,
-        private DestroyTaskHandler $destroyAction,
+        private readonly StoreTaskHandler $storeAction,
+        private readonly PaginateTaskHandler $paginateAction,
+        private readonly UpdateTaskHandler $updateAction,
+        private readonly DestroyTaskHandler $destroyAction,
     ) {
         //
     }

@@ -16,8 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 final class TaskAnswerController extends Controller
 {
     public function __construct(
-        private StoreAnswerHandler $storeAction,
-        private DestroyAnswerHandler $destroyAction,
+        private readonly StoreAnswerHandler $storeAction,
+        private readonly DestroyAnswerHandler $destroyAction,
     ) {
         //
     }
