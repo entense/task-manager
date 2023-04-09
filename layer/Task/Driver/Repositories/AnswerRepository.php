@@ -11,7 +11,7 @@ use Layer\Task\Exceptions\{AnswerNotFoundException, TaskNotFoundException};
 use Throwable;
 
 final class AnswerRepository implements AnswerRepositoryInterface
-{    
+{
     public function store(int $taskId, StoreAnswerDto $payload): TaskAnswerEloquent
     {
         $task = TaskEloquent::find($taskId);
