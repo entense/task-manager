@@ -35,8 +35,8 @@ jobs:
       # - name: Run static code analysis
       #   run: vendor/bin/phpstan --error-format=github
 
-      # - name: Execute tests
-      #   run: vendor/bin/phpunit
+      - name: Execute tests
+        run: vendor/bin/phpunit
 
       - name: Run coding standard checks
         run: vendor/bin/pint --test
