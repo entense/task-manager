@@ -47,7 +47,7 @@
             oauth2RedirectUrl: "{{ route('l5-swagger.'.$documentation.'.oauth2_callback', [], $useAbsolutePath) }}",
             displayRequestDuration: true,
             requestSnippetsEnabled: true,
-            defaultModelsExpandDepth: 1,
+            defaultModelsExpandDepth: 0,
             tryItOutEnabled: false,
             requestInterceptor: function(request) {
                 console.log(request);
