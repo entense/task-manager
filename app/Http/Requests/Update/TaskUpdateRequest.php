@@ -28,7 +28,7 @@ final class TaskUpdateRequest extends BaseRequest
     {
         return Gate::check('update-task');
     }
-    
+
     /**
      * @return array<string, mixed>
      */

@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Components\Documentator\Attributes;
 
+use Attribute;
+use OpenApi\Attributes\{AdditionalProperties, Discriminator, Schema};
 use OpenApi\Generator;
-use OpenApi\Attributes\Discriminator;
-use OpenApi\Attributes\Schema;
-use OpenApi\Attributes\AdditionalProperties;
 
-#[\Attribute(\Attribute::TARGET_METHOD | \Attribute::TARGET_PROPERTY | \Attribute::TARGET_PARAMETER | \Attribute::TARGET_CLASS_CONSTANT | \Attribute::IS_REPEATABLE)]
+#[Attribute(Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY | Attribute::TARGET_PARAMETER | Attribute::TARGET_CLASS_CONSTANT | Attribute::IS_REPEATABLE)]
 class Property extends \OpenApi\Annotations\Property
 {
     public function __construct(

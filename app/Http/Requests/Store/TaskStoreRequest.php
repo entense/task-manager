@@ -57,7 +57,7 @@ final class TaskStoreRequest extends BaseRequest
     {
         return Gate::check('create-task');
     }
-    
+
     /**
      * @return array<string, mixed>
      */
