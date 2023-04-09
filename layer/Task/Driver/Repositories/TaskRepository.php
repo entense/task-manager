@@ -92,23 +92,23 @@ final class TaskRepository implements TaskRepositoryInterface
 
     public function destroy(int $taskId): bool
     {
-        $warehouse = TaskEloquent::find($taskId);
+        $task = TaskEloquent::find($taskId);
 
-        if (is_null($warehouse)) {
+        if (is_null($task)) {
             throw new TaskNotFoundException($taskId);
         }
 
-        return $warehouse->delete();
+        return $task->delete();
     }
 
     public function restore(int $taskId): bool
     {
-        $warehouse = TaskEloquent::onlyTrashed()->find($taskId);
+        $task = TaskEloquent::onlyTrashed()->find($taskId);
 
-        if (is_null($warehouse)) {
+        if (is_null($task)) {
             throw new TaskNotFoundException($taskId);
         }
 
-        return $warehouse->restore();
+        return $task->restore();
     }
 }

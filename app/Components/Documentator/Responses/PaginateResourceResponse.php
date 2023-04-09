@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Components\Documentator\Responses;
 
+use const ALLOF;
+
 use Attribute;
 use OpenApi\{Attributes as OA, Generator};
 use Symfony\Component\HttpFoundation\Response;
@@ -24,9 +26,9 @@ class PaginateResourceResponse extends \OpenApi\Annotations\Response
         ?array $x = null,
         ?array $attachables = null
     ) {
-        if ($allOf) {
+        if ($allOf !== []) {
             $items = new OA\Items(
-                $allOf ? allOf : [
+                $allOf !== [] ? ALLOF : [
                     new Oa\Schema($ref),
                     ...$allOf
                 ]

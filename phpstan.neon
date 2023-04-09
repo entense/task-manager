@@ -3,6 +3,9 @@ includes:
 parameters:
     paths:
         - app
+        - config
+        - resources
+        - routes
     level: 9
     ignoreErrors:
     excludePaths:
@@ -11,3 +14,4 @@ parameters:
     universalObjectCratesClasses:
         - Illuminate\Http\Resources\Json\JsonResource
     checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false

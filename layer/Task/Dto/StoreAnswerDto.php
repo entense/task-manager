@@ -8,8 +8,8 @@ use Entense\Extractor\DataTransfer;
 final class StoreAnswerDto extends DataTransfer
 {
     #[Cast, Required(reason: 'We need a "text"')]
-    public readonly string $text;
+    public string $text;
 
     #[Cast, Optional]
-    public readonly array $files;
+    public array $files;
 }
