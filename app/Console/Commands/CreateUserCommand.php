@@ -24,7 +24,11 @@ class CreateUserCommand extends Command
 
     public function handle(): void
     {
-        $nameToken = $this->getNameToken();
+        $nameToken = $this->option('token');
+
+        if (is_null($nameToken)) {
+            $nameToken = $this->ask('Укажите название токена.', 'default');
+        }
 
         $admin = $this->ask('Администратор? [Y/N]', 'N') === 'Y';
 
@@ -42,18 +46,5 @@ class CreateUserCommand extends Command
         // Success message
         $this->info('Пользователь успешно создан!');
         $this->info('Токен для пользователя: ' . $token->plainTextToken);
-    }
-
-    private function getNameToken(): string
-    {
-        /** @var ?string */
-        $nameToken = $this->option('token');
-
-        if (is_null($nameToken)) {
-            /** @var string */
-            $nameToken = $this->ask('Укажите название токена.', 'default');
-        }
-
-        return $nameToken;
     }
 }

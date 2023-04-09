@@ -6,7 +6,7 @@ parameters:
         - config
         - resources
         - routes
-    level: 9
+    level: 8
     ignoreErrors:
     excludePaths:
         analyse:
