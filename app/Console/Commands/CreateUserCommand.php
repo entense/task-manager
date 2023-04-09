@@ -22,13 +22,9 @@ class CreateUserCommand extends Command
      */
     protected $description = 'Manually creates a new laravel user.';
 
-    public function handle()
+    public function handle(): void
     {
-        $token = $this->option('token');
-
-        if ($token === null) {
-            $token = $this->ask('Укажите название токена.', 'default');
-        }
+        $nameToken = $this->getNameToken();
 
         $admin = $this->ask('Администратор? [Y/N]', 'N') === 'Y';
 
@@ -36,7 +32,7 @@ class CreateUserCommand extends Command
             $user = new User;
             $user->is_admin = $admin;
             $user->save();
-            $token = $user->createToken($token);
+            $token = $user->createToken($nameToken);
         } catch (Exception $e) {
             $this->error($e->getMessage());
 
@@ -46,5 +42,18 @@ class CreateUserCommand extends Command
         // Success message
         $this->info('Пользователь успешно создан!');
         $this->info('Токен для пользователя: ' . $token->plainTextToken);
+    }
+
+    private function getNameToken(): string
+    {
+        /** @var ?string */
+        $nameToken = $this->option('token');
+
+        if (is_null($nameToken)) {
+            /** @var string */
+            $nameToken = $this->ask('Укажите название токена.', 'default');
+        }
+
+        return $nameToken;
     }
 }

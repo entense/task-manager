@@ -767,8 +767,8 @@
                 "required": false,
                 "schema": {
                     "enum": [
-                        true,
-                        false
+                        0,
+                        1
                     ]
                 }
             }

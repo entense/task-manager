@@ -8,6 +8,9 @@ use Layer\Task;
 
 final class AppServiceProvider extends ServiceProvider
 {
+    /**
+     * @var array<string, string>
+     */
     public array $bindings = [
         Task\Contracts\Repositories\TaskRepositoryInterface::class => Task\Driver\Repositories\TaskRepository::class,
         Task\Contracts\UseCase\TaskUseCaseInterface::class => Task\UseCase\TaskService::class,

@@ -26,7 +26,7 @@ final class TaskController extends Controller
         //
     }
 
-    #[OA\Post(
+    #[Documentator\Attributes\Post(
         path: '/v1/tasks',
         summary: 'Создать задачу',
         description: 'Требуются права администратора',
@@ -51,7 +51,7 @@ final class TaskController extends Controller
         );
     }
 
-    #[OA\Get(
+    #[Documentator\Attributes\Get(
         path: '/v1/tasks',
         parameters: [
             new OA\QueryParameter(ref: '#/components/parameters/PaginateRequest.page'),
@@ -78,7 +78,7 @@ final class TaskController extends Controller
         );
     }
 
-    #[OA\Patch(
+    #[Documentator\Attributes\Patch(
         path: '/v1/tasks/{taskId}',
         parameters: [
             new OA\PathParameter(
@@ -116,7 +116,7 @@ final class TaskController extends Controller
         );
     }
 
-    #[OA\Delete(
+    #[Documentator\Attributes\Delete(
         path: '/v1/tasks/{taskId}',
         description: 'Требуются права администратора',
         parameters: [

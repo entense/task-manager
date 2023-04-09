@@ -6,3 +6,8 @@ parameters:
     level: 9
     ignoreErrors:
     excludePaths:
+        analyse:
+             - app/Components/Documentator/*
+    universalObjectCratesClasses:
+        - Illuminate\Http\Resources\Json\JsonResource
+    checkGenericClassInNonGenericObjectType: false

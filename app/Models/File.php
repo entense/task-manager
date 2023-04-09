@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Mostafaznv\Larupload\Storage\Attachment;
 use Mostafaznv\Larupload\Traits\Larupload;
 
+/**
+ * @property \Mostafaznv\Larupload\Storage\Attachment $media
+ */
 final class File extends BaseModel
 {
     use HasFactory, Larupload;
@@ -20,6 +23,9 @@ final class File extends BaseModel
         return $this->morphTo();
     }
 
+    /**
+     * @return array<\Mostafaznv\Larupload\UploadEntities>
+     */
     public function attachments(): array
     {
         return [

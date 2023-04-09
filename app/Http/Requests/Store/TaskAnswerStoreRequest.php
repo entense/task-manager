@@ -26,6 +26,9 @@ use OpenApi\Attributes as OA;
 )]
 final class TaskAnswerStoreRequest extends BaseRequest
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         return [

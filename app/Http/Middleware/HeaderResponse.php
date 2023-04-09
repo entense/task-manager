@@ -11,7 +11,7 @@ class HeaderResponse
     public function handle(Request $request, Closure $next): Response
     {
         $response = $next($request);
-        $response->header('Admin', $request->user()->is_admin);
+        $response->header('Admin', $request->user()?->is_admin);
 
         return $response;
     }

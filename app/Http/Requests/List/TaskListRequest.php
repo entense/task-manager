@@ -23,12 +23,15 @@ use OpenApi\Attributes as OA;
         description: 'Фильтр по отмеченным.',
         required: false,
         schema: new OA\Schema(
-            enum: [true, false]
+            enum: [0, 1]
         )
     ),
 ]
 final class TaskListRequest extends BaseRequest
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         return [

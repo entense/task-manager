@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BaseRequest extends FormRequest
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         return [

@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use OpenApi\Attributes as OA;
 
+/**
+ * @property \App\Models\File $resource
+ */
 #[OA\Schema(
     schema: 'FileResource',
     type: 'object',
@@ -24,8 +27,11 @@ use OpenApi\Attributes as OA;
         ]),
     ]
 )]
-class FileResource extends JsonResource
+final class FileResource extends JsonResource
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(Request $request): array
     {
         return [

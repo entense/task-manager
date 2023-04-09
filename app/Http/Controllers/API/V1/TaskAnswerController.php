@@ -22,7 +22,7 @@ final class TaskAnswerController extends Controller
         //
     }
 
-    #[OA\Post(
+    #[Documentator\Attributes\Post(
         path: '/v1/tasks/{taskId}/answers',
         parameters: [
             new OA\PathParameter(
@@ -58,7 +58,7 @@ final class TaskAnswerController extends Controller
         );
     }
 
-    #[OA\Delete(
+    #[Documentator\Attributes\Delete(
         path: '/v1/answers/{answerId}',
         parameters: [
             new OA\PathParameter(

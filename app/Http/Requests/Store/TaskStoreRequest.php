@@ -57,7 +57,10 @@ final class TaskStoreRequest extends BaseRequest
     {
         return Gate::check('create-task');
     }
-
+    
+    /**
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         return [
@@ -66,7 +69,7 @@ final class TaskStoreRequest extends BaseRequest
             'need_answer' => 'boolval',
             'links' => 'array',
             'links.*.title' => 'string|required',
-            'links.*.link' => 'string|required',
+            'links.*.link' => 'url|required',
             'files' => 'array',
             'files.*' => 'file',
         ];

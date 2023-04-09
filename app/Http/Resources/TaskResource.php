@@ -23,6 +23,9 @@ use OpenApi\Attributes as OA;
 )]
 class TaskResource extends JsonResource
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(Request $request): array
     {
         return [
